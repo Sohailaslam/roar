@@ -11,10 +11,11 @@ prohibited this comment from being saved:</h2>
   </div>
   <% end %>
 
+  <!--I just add the Name Validation here, so it does not let you fill up the Form until you fill up the name-->
   
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.text_field :name, required: true %>
   </div>
 
   <div class="field">

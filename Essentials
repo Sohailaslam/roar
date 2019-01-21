@@ -12,3 +12,9 @@ For Models
 ----------
 
 It is Necessary to add the Validations in your Rails Model, Because validation is necessary otherwise your database is filled up with empty records like in the comments, There is no validation, so it's necessary to validate the each record.
+You Have to Structure your Database first then proceed further, first go to the all phases that you are going to develop, Never jump directly into the Code, I seen a lot of field in your views, that never be used like publised_at and else.
+
+For Views
+---------
+
+You have to design your page so it looks good and easy to read, In general There is no need to Provide the Publised field with Time in the Form, You just Provided this Field but never used it, and in your forms you never passsed the User_Id using the Form rather on the Create action you get the current_user articles, This is The BAD APPROACH, This all project is working but it needs a lot of optimization like I told you above.
