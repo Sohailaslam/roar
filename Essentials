@@ -1,0 +1,3 @@
+First of All, You inculde the Devise gem in your Gemfile, but you never used it, The Best Practice in your Rails App is to keep your Gemfile
+as min as you can. If you are not using any gem, Don't include it the Gemfile.
+Next Point is, its better approah to use some Predefined Functionality like the Devise Provide for the User Authentication, I Checked your ApplicationController and I noticed you defined all the function like accessing current_user and more, Devise Provide this By default.
