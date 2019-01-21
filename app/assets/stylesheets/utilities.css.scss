@@ -1,0 +1,323 @@
+.navbarCustomHeader {
+	background-color: #000000;
+}
+
+.navbarCustomButtons {
+	background-color: #000000;
+	color: #FFE4E1;
+}
+
+.navbar-header {
+	background-color: #000000;
+	color: #EB5745;
+}
+
+.nav > li > a {
+	color: #FFFFFF;
+}
+
+.nav > li > a:hover {
+	color: #EB5745;
+	background-color: #000000;
+}
+
+.active {
+	background-color: #1B1A1A;
+}
+
+a {
+	color: #EB5745;
+}
+
+a:hover {
+	color: #EB5745;
+	text-decoration:none;
+}
+
+a:visited {
+	color: #EB5745;
+	text-decoration:none;
+}
+
+table {
+	margin-bottom: 10px;
+}
+
+td {
+	padding-left: 10px;
+	text-align: left;
+}
+
+#articleExcerpt {
+	font-style: italic;
+	font-size: 11pt;	
+}
+
+.centre_text {
+	text-align: center;
+}
+
+.settings {
+	margin-left: 700px;
+}
+
+.profile_icons {
+	margin-left: 10px;
+}
+
+input[type=text], input[type=password], textarea{
+	width: 180px;
+}
+
+.edit_profile {
+	background-color: #FFE4E1;
+	border-radius: 25px;
+	width: 390px;
+	padding: 30px;
+	margin-left: 400px;
+}
+
+.edit_article {
+	background-color: #FFE4E1;
+	border-radius: 25px;
+	width: 390px;
+	padding: 30px;
+	margin-left: 410px;
+}
+
+.edit_user {
+	background-color: #FFE4E1;
+	border-radius: 25px;
+	width: 350px;
+	padding: 30px;
+	margin-left: 415px;
+}
+
+.links {
+	margin-top: 10px;
+}
+
+.coral_text {
+	color: #EB5745;
+	font-weight: normal;
+}
+
+.link_colour {
+	color: #EB5745;
+	font-weight: normal;
+	text-decoration:none;
+
+}
+
+.link_colour:hover {
+	text-decoration:none;
+	color: #a6a6a6;
+}
+
+.link_colour:visited {
+	text-decoration:none;
+	color: #a6a6a6;
+}
+
+.thumbnail {
+	background-color: #FFE4E1;
+	border-radius: 25px;
+	width: 360px;
+}
+
+.thumbnail .caption {
+	margin-top: -40px;
+}
+
+#articleImage {
+	height: 300px;
+	margin-top: -20px;
+}
+
+#home_name {
+	color: #EB5745; 
+	font-size: 20px; 
+	margin-bottom: 15px; 
+	margin-top: 20px;
+}
+
+.article_title {
+	color: #000000;
+}
+
+.article_title:hover {
+	color: #EB5745;
+	text-decoration: none;
+}
+
+.article_title:visited {
+	color: #EB5745;
+	text-decoration: none;
+}
+
+.new_article {
+	background-color: #FFE4E1;
+	border-radius: 25px;
+	width: 390px;
+	padding: 30px;
+	margin-left:405px;
+}
+
+.new_user {
+	background-color: #FFE4E1;
+	border-radius: 25px;
+	width: 300px;
+	padding: 30px;
+	margin-left:450px;
+}
+
+.profile {
+	background-color: #FFE4E1;
+    border-radius: 25px;
+    width: 390px;
+    padding: 30px;
+    margin-left: 380px;
+    margin-top: 40px;
+}
+
+#threads {
+	background-color: #EEEEEE;
+    border-radius: 25px;
+    width: 180px;
+    padding: 2px;
+    margin-top: -400px;
+    margin-left: 70px
+}
+
+#threadList {
+	text-align: center;
+	padding-bottom: 3px;
+}
+
+#threadHeader {
+	text-align: center;
+	padding-top:10px;
+}
+
+.field {
+	margin-bottom: 5px;
+}
+
+#profile_image {
+	width: 150px;
+	margin-left: 85px;
+}
+
+#comments {
+	width:600px;
+	margin-left: 400px;
+}
+
+#comment_content {
+	margin-left: 60px;
+	padding-bottom: 15px;
+}
+
+.comment {
+	background-color: #FFE4E1;
+	border-radius: 25px;
+}
+
+.new_comment {
+	margin-bottom: 100px;
+    margin-left: 400px;
+    background-color: #000000;
+    color: #FFFFFF;
+    width: 250px;
+    border-radius: 25px;
+}
+
+.new_comment .field {
+	margin-left: 20px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+}
+
+#comment_created {
+	margin-left: 400px;
+    margin-top: -40px;
+    font-size: 8pt;
+    font-style: italic;
+    margin-bottom: 0px;
+}
+
+#commentSender {
+	margin-left: 60px;
+	margin-top: -5px
+}
+
+#numOfComments {
+	margin-left: 27px;
+    margin-top: -37px;
+    font-weight: bold;
+    font-size: 10pt;
+}
+
+#commentContainer {
+	margin-left: 260px;
+    margin-top: 20px;
+}
+
+#speechBubbleIcon {
+	width: 50px;
+}
+
+#threadBody {
+    background-color: #EEEEEE;
+    width: 600px;
+    margin-left: 400px;
+    border-width: 1px;
+}
+
+#threadContent {
+	margin-left: 50px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+#users {
+	background-color: #FFE4E1;
+    border-radius: 25px;
+    width: 300px;
+    padding: 10px;
+    margin-left: 450px;
+    text-align: center;
+}
+
+#username {
+	margin-top: -35px;
+	margin-left: 30px;
+}
+
+#user_picture {
+	width: 40px;
+    margin-bottom: 10px;
+    margin-right: 300px;
+}
+
+#searchCategories {
+	background-color: #FFE4E1;
+    border-radius: 25px;
+    width: 300px;
+    padding: 10px;
+    margin-left: 450px;
+    text-align: center;
+}
+
+.pagination {
+	margin-right: 60px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.categories {
+	margin-left: 525px;
+    padding-bottom: 10px;
+}

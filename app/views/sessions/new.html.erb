@@ -1,0 +1,24 @@
+<% provide(:login, "active") %>
+<% provide(:title, "Login | ROaR") %>
+
+<h3>Login</h3>
+<%= form_tag session_path do %>
+  <div class="field">
+    <%= label_tag :email %><br />
+    <%= text_field_tag :email %>
+  </div>
+  
+  <div class="field">
+    <%= label_tag :password %><br />
+    <%= password_field_tag :password %>
+  </div>
+    
+  <div>
+    <button class="btn btn-default btn-sm" role="button">
+      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+      <%= 'Login' %>
+    </button>
+    or  <%= link_to "Register", new_user_path, {:class => 'link_colour'} %></button>
+  </div> 
+
+<% end %>

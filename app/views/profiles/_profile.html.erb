@@ -1,0 +1,40 @@
+<% if profile.id == current_user.profile.id %>
+    <% provide(:profile, "active") %>
+    <% provide(:title, "My Profile | ROaR") %>
+    <div class = "settings centre_text">
+    	<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 
+    	<%= link_to "Change Password", edit_user_path(current_user), {:class => 'link_colour'} %> | 
+    	<%= link_to "Edit Profile", edit_profile_path(current_user), {:class => 'link_colour'} %>
+    </div>
+<% else %>
+    <% provide(:title, profile.name.to_s + "'s Profile | ROaR") %>
+<% end %>
+
+<%= div_for profile do %>
+	<img id = "profile_image" src="http://www.puntodioro.com/img/testimonials/person-icon.png">
+	<h3 class = 'centre_text'><%= profile.name %></h3>
+    <p class = 'coral_text centre_text'><%= profile.bio %></p>
+    <p>
+    	<span class="glyphicon glyphicon-gift profile_icons" aria-hidden="true"></span> 
+    	<%= profile.birthday %>
+    </p>
+    <p>
+    	<img style = "width: 30px;" src="http://baetigre.polkadotmayhem.com/img/twitter_icon.png">
+    	<%= link_to "@" + profile.twitter.to_s, "https://twitter.com/" + profile.twitter.to_s, {target: "_blank", :class => 'link_colour'}%>
+    </p>
+    <p>
+    	<span class="glyphicon glyphicon-calendar profile_icons" aria-hidden="true"></span> 
+    	Joined: <%= profile.created_at %>
+    </p>
+<% end %>
+
+<div id = "threads">
+    <% if profile.id == current_user.profile.id %>
+      <h4 class = "centre_text">Your Threads (<%= @user.articles.size %>)</h4>
+    <% else %>
+        <h4 class = "centre_text"><%= profile.name %>'s Threads (<%= @user.articles.size %>)</h4>
+    <%end %>
+    <% @user.articles.each do |thread| %>
+      <p id = "threadList"><%= link_to thread.title, thread%></p>
+    <% end %>
+</div>

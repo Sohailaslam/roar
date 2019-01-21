@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="shortcut icon" href="https://cdn1.iconfinder.com/data/icons/miscellaneous-4/32/ruby-512.png">
+  <title><%= yield(:title) %></title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <nav class="navbar navbarCustomHeader">
+    <div class="container">
+      <div class="navbar-header">
+        <h1 id = "home_name"><%= link_to "ROaR: Ruby on Rails Discussion Board", root_path %></h1>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right navbarCustomButtons">          
+          <% if logged_in? %>
+            <li class = "<%= yield(:threads) %>"><%= link_to "All Threads", articles_path %></li>
+            <li class = "<%= yield(:newthread) %>"><%= link_to "Create Thread", new_article_path %></li>
+            <li class = "<%= yield(:profile) %>"><%= link_to "My Profile", profile_path(current_user) %></li>
+            <li class = "<%= yield(:users) %>"><%= link_to "All Users", users_path %></li>
+            <% if current_user.admin == true %>
+              <li class = "<%= yield(:admin) %>"><%= link_to "Admin", rails_admin.dashboard_path %></li>
+            <%end %>
+            <li class = "<%= yield(:login) %>"><%= link_to "Logout", logout_path %></li>
+            <!-- When submit the form, the view rendered will be the index view of our articles resource -->
+            <%= form_tag(articles_path, :method => "get", id: "search-form") do %>
+              <div style = "margin-left: 310px; margin-bottom: 10px; color: #000000;">
+                <%= text_field_tag :search, params[:search], class: "span2", placeholder: "Search by Thread Name" %>
+                <button class="btn btn-default btn-sm" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </div>
+            <% end %>
+          <% else %>
+            <li class = "<%= yield(:login) %>"><%= link_to "Login", login_path %></li>
+          <% end %>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div id="main" style = "margin-left:30px">
+    <%= content_tag(:p, notice, class: 'notice') if notice.present? %>
+    <%= content_tag(:p, alert, class: 'alert') if alert.present? %>
+    <%= yield %>
+  </div>
+</body>
+</html>

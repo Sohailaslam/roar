@@ -1,0 +1,10 @@
+<% provide(:users, "active") %>
+<% provide(:title, "All Users | ROaR") %>
+<h3 class = 'centre_text'>All Users</h3>
+<div id="users">
+  <%= render @users %>
+</div>
+
+<%= will_paginate @users %>
+
+

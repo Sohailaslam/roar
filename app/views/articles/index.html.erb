@@ -1,0 +1,9 @@
+<% provide(:threads, "active") %>
+<% provide(:title, "All Threads | ROaR") %>
+<div class = "<%= yield(:categories) %> categories" ><%= link_to "Search by Category here", categories_path %></div>
+<div id="articles">
+  <%= render @articles %>
+</div>
+<%= will_paginate @articles %>
+
+

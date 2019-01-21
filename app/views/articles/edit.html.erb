@@ -1,0 +1,11 @@
+<% provide(:title, "Edit Thread | ROaR") %>
+
+<h3 class="centre_text">Editing Thread</h3>
+
+<%= render 'form' %>
+
+<div class = "links centre_text">
+	<%= link_to 'Show', @article, {:class => 'link_colour'}%> |
+	<%= link_to 'Back', articles_path, {:class => 'link_colour'} %>
+</div>
+

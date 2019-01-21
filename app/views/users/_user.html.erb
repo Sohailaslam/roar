@@ -1,0 +1,6 @@
+<%= div_for user do %>
+   <% if user.id != current_user.id %>
+	 <img id = "user_picture" src="images/profileIcon.png">
+	 <h4 id = "username"><%= link_to user.profile.name, profile_path(user), {:class => 'link_colour'}  %></h4>
+   <%end %>
+<% end %>

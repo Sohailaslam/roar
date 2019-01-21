@@ -1,0 +1,447 @@
+  [1m[36m (19.7ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  select sqlite_version(*)
+  [1m[36m (16.0ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateArticles (20151215192731)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  CREATE TABLE "articles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "body" text, "published_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151215192731"]]
+  [1m[35m (16.2ms)[0m  commit transaction
+Migrating to AddExcerptAndLocationToArticles (20151215192956)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "articles" ADD "excerpt" varchar
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "articles" ADD "location" varchar[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151215192956"]]
+  [1m[36m (16.1ms)[0m  [1mcommit transaction[0m
+Migrating to CreateUsers (20151215195742)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "password" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151215195742"]]
+  [1m[36m (15.4ms)[0m  [1mcommit transaction[0m
+Migrating to CreateProfiles (20151215195751)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "profiles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "name" varchar, "birthday" date, "bio" text, "color" varchar, "twitter" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151215195751"]]
+  [1m[36m (16.3ms)[0m  [1mcommit transaction[0m
+Migrating to AddUserIdToArticles (20151215200938)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "articles" ADD "user_id" integer[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151215200938"]]
+  [1m[36m (14.6ms)[0m  [1mcommit transaction[0m
+Migrating to CreateCategories (20151215201521)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "categories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151215201521"]]
+  [1m[36m (14.8ms)[0m  [1mcommit transaction[0m
+Migrating to CreateArticlesCategories (20151215201550)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "articles_categories" ("article_id" integer, "category_id" integer) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151215201550"]]
+  [1m[36m (15.2ms)[0m  [1mcommit transaction[0m
+Migrating to CreateComments (20151215202224)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "comments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "article_id" integer, "name" varchar, "email" varchar, "body" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151215202224"]]
+  [1m[36m (15.1ms)[0m  [1mcommit transaction[0m
+Migrating to RenamePasswordToHashedPassword (20151215203246)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.7ms)[0m  [1mCREATE TEMPORARY TABLE "ausers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "hashed_password" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "users"
+  [1m[36m (0.2ms)[0m  [1mDROP TABLE "users"[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "hashed_password" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "ausers"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "ausers"
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151215203246"]]
+  [1m[35m (16.4ms)[0m  commit transaction
+Migrating to AddAdminToUsers (20151218004753)
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  ALTER TABLE "users" ADD "admin" boolean DEFAULT 'f'
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151218004753"]]
+  [1m[35m (14.6ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+
+Started GET "/" for 103.255.4.50 at 2019-01-15 09:30:41 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by SessionsController#index as HTML
+  Rendered sessions/index.html.erb within layouts/application (4.1ms)
+DEPRECATION WARNING: Extra .css in SCSS file is unnecessary. Rename /home/ubuntu/workspace/rorapp/app/assets/stylesheets/utilities.css.scss to /home/ubuntu/workspace/rorapp/app/assets/stylesheets/utilities.scss. (called from _app_views_layouts_application_html_erb___3726969920690767981_46392260 at /home/ubuntu/workspace/rorapp/app/views/layouts/application.html.erb:6)
+DEPRECATION WARNING: Extra .css in SCSS file is unnecessary. Rename /home/ubuntu/workspace/rorapp/app/assets/stylesheets/utilities.css.scss to /home/ubuntu/workspace/rorapp/app/assets/stylesheets/utilities.scss. (called from _app_views_layouts_application_html_erb___3726969920690767981_46392260 at /home/ubuntu/workspace/rorapp/app/views/layouts/application.html.erb:6)
+Completed 200 OK in 7223ms (Views: 7207.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-ca274a589cab77c6472e6eb2bb5e0000a392075f830f5331c7057f10a583daa5.css?body=1" for 103.255.4.50 at 2019-01-15 09:30:49 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/jquery_ujs.self-d456baa54c1fa6be2ec3711f0a72ddf7a5b2f34a6b4f515f33767d6207b7d4b3.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:49 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/jquery.self-a714331225dda820228db323939889f149aec0127aeb06255646b616ba1ca419.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:50 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:50 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/alert.self-d8b7bd612b3dcfdefb7b5539b9d5848d66ccbd3e7af8bb8d48bfb3288aaa7be8.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:50 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/affix.self-3555752f8a930795ee9e56751a52e6871104ae85d01b3ab8363da3802a5ecc78.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:50 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/button.self-e74d33ba39500940a78d6fa4d2d64f6ca7fd86d60a2149641f7fde7ba711d8a1.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:50 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/collapse.self-056c40532d9f0f126ec17e839f60c942f573fbd61a086e7f156306e3fc5e8c1f.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:50 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/carousel.self-35d204878d906298e55bc24553e11fd89b980fc4ffe5792fe36af8c0da289c54.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:50 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/dropdown.self-e56c2ffee4618411d43ecf15c89273f6223847ad756e1cd17545d04afa732ed4.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:51 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/scrollspy.self-52afd90e8ba97d9f08617a13986e8869d6c4a45751c0bff59a6f91241e722aca.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:51 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/tab.self-dad0d5c377f9fae26394484535ebb23ccf68afae084f896af6ea4cdf8c9f6ae0.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:51 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/tooltip.self-facdc69246a072acb927ded77ff655f7c27a518b9357fddd45d119fbc8a0ab9f.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:51 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/transition.self-3b268d4cd8c79e46ded7392885f72f64ffb5b0d49948a12b8cf9779f6163e13a.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:51 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/modal.self-62463080dba6b9d024ff0a3192da0e76eacbc683194f3395047c6f5cfa0acb59.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:51 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap/popover.self-210cff1fb4b72b71a29b5122180cb5937c8145cd13a934dc838280f1d9607a3e.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:51 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/bootstrap-sprockets.self-fbfa5ad7d9aa0afe439ec4ff3883acc4cb92b62cb67c40d674320c9aa1d4642d.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:51 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:51 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/sessions.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:52 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/comments.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:52 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/application.self-f8806224e027f3e3f0138ea9ce99319e298dfdb323304d1f1be6eae8e8c74724.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:52 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/assets/users.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 103.255.4.50 at 2019-01-15 09:30:52 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/login" for 103.255.4.50 at 2019-01-15 09:31:16 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 287ms (Views: 285.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/bootstrap/glyphicons-halflings-regular-fe185d11a49676890d47bb783312a0cda5a44c4039214094e7957b4c040ef11c.woff2" for 103.255.4.50 at 2019-01-15 09:31:17 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+
+Started GET "/users/new" for 103.255.4.50 at 2019-01-15 09:31:20 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by UsersController#new as HTML
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "profiles" ("name", "bio", "twitter", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Name"], ["bio", "Bio"], ["twitter", "TwitterHandle"], ["created_at", "2019-01-15 09:31:20.498203"], ["updated_at", "2019-01-15 09:31:20.498203"]]
+  [1m[35m (16.8ms)[0m  commit transaction
+  Rendered users/_form.html.erb (34.4ms)
+  Rendered users/new.html.erb within layouts/application (43.5ms)
+Completed 200 OK in 265ms (Views: 213.9ms | ActiveRecord: 18.9ms)
+
+
+Started POST "/users" for 103.255.4.50 at 2019-01-15 09:31:41 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"NAdjx7rZTzINRFV6YHltAo79AHoRbxd9BeRuhwN1U7MhTVT1TS/6ugEapZbQwt58Q49gj2R7QdE7YeDr3YPihA==", "user"=>{"email"=>"17100283@lums.edu.pk", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "profiles" ("name", "bio", "twitter", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "Name"], ["bio", "Bio"], ["twitter", "TwitterHandle"], ["created_at", "2019-01-15 09:31:41.282851"], ["updated_at", "2019-01-15 09:31:41.282851"]]
+  [1m[36m (16.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = '17100283@lums.edu.pk' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("email", "hashed_password", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["email", "17100283@lums.edu.pk"], ["hashed_password", "f865b53623b121fd34ee5426c792e5c33af8c227"], ["created_at", "2019-01-15 09:31:41.342477"], ["updated_at", "2019-01-15 09:31:41.342477"]]
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE "profiles" SET "user_id" = ?, "updated_at" = ? WHERE "profiles"."id" = ?[0m  [["user_id", 1], ["updated_at", "2019-01-15 09:31:41.344632"], ["id", 2]]
+  [1m[35m (17.3ms)[0m  commit transaction
+Redirected to https://test-sohail961.c9users.io/
+Completed 302 Found in 93ms (ActiveRecord: 35.7ms)
+
+
+Started GET "/" for 103.255.4.50 at 2019-01-15 09:31:41 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendered sessions/index.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 165ms (Views: 163.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/articles" for 103.255.4.50 at 2019-01-15 09:32:56 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#index as HTML
+  [1m[36mArticle Load (0.4ms)[0m  [1mSELECT  "articles".* FROM "articles"  ORDER BY created_at DESC LIMIT 6 OFFSET 0[0m
+  Rendered collection (0.0ms)
+  Rendered articles/index.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 212ms (Views: 196.0ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/categories" for 103.255.4.50 at 2019-01-15 09:33:10 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#categorySort as HTML
+Redirected to https://test-sohail961.c9users.io/login
+Filter chain halted as :authenticate rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/categories" for 103.255.4.50 at 2019-01-15 09:33:11 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#categorySort as HTML
+Redirected to https://test-sohail961.c9users.io/login
+Filter chain halted as :authenticate rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/categories" for 103.255.4.50 at 2019-01-15 09:33:12 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#categorySort as HTML
+Redirected to https://test-sohail961.c9users.io/login
+Filter chain halted as :authenticate rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/categories" for 103.255.4.50 at 2019-01-15 09:33:12 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#categorySort as HTML
+Redirected to https://test-sohail961.c9users.io/login
+Filter chain halted as :authenticate rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for 103.255.4.50 at 2019-01-15 09:33:13 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 203ms (Views: 201.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/session" for 103.255.4.50 at 2019-01-15 09:33:17 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+A0+1n0LM7ZX5Cfy7hHZSVXLuN3mgS5SKu92xlKxQqrtRwnkiv2GPlu61x5eqmo3mLnYKJOVeP4UaviqjEfznQ==", "email"=>"17100283@lums.edu.pk", "password"=>"[FILTERED]"}
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = ? LIMIT 1  [["email", "17100283@lums.edu.pk"]]
+Redirected to https://test-sohail961.c9users.io/
+Completed 302 Found in 7ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 103.255.4.50 at 2019-01-15 09:33:18 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendered sessions/index.html.erb within layouts/application (0.1ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 171ms (Views: 170.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles" for 103.255.4.50 at 2019-01-15 09:33:44 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#index as HTML
+  [1m[35mArticle Load (0.4ms)[0m  SELECT  "articles".* FROM "articles"  ORDER BY created_at DESC LIMIT 6 OFFSET 0
+  Rendered collection (0.0ms)
+  Rendered articles/index.html.erb within layouts/application (2.4ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 143ms (Views: 141.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/articles/new" for 103.255.4.50 at 2019-01-15 09:33:48 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCategory Load (0.3ms)[0m  [1mSELECT "categories".* FROM "categories"  ORDER BY categories.name[0m
+  Rendered articles/_form.html.erb (14.7ms)
+  Rendered articles/new.html.erb within layouts/application (16.6ms)
+Completed 200 OK in 224ms (Views: 218.0ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/articles" for 103.255.4.50 at 2019-01-15 09:34:14 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"paEB3O08NZ18WK9xm+jdcPXjw0/rDq/VB9KtG+6+Keqw6zbuGsqAFXAGX50rU24OOJGjup4a+Xk5VyN3MEiY3Q==", "article"=>{"title"=>"Gems Discussion", "location"=>"Lahore", "excerpt"=>"gems discussion", "body"=>"this is a body", "published_at(1i)"=>"2019", "published_at(2i)"=>"1", "published_at(3i)"=>"15", "published_at(4i)"=>"09", "published_at(5i)"=>"33"}}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "articles" ("title", "location", "excerpt", "body", "published_at", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["title", "Gems Discussion"], ["location", "Lahore"], ["excerpt", "gems discussion"], ["body", "this is a body"], ["published_at", "2019-01-15 09:33:00.000000"], ["user_id", 1], ["created_at", "2019-01-15 09:34:14.703879"], ["updated_at", "2019-01-15 09:34:14.703879"]]
+  [1m[36m (17.0ms)[0m  [1mcommit transaction[0m
+Redirected to https://test-sohail961.c9users.io/articles/1
+Completed 302 Found in 46ms (ActiveRecord: 17.8ms)
+
+
+Started GET "/articles/1" for 103.255.4.50 at 2019-01-15 09:34:15 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mArticle Load (0.4ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mProfile Load (0.3ms)[0m  SELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1  [["user_id", 1]]
+  [1m[36mCategory Load (0.4ms)[0m  [1mSELECT "categories".* FROM "categories" INNER JOIN "articles_categories" ON "categories"."id" = "articles_categories"."category_id" WHERE "articles_categories"."article_id" = ?  ORDER BY categories.name[0m  [["article_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered articles/_article.html.erb (40.9ms)
+  Rendered collection (0.0ms)
+  Rendered comments/new.html.erb (10.7ms)
+  Rendered articles/show.html.erb within layouts/application (55.2ms)
+Completed 200 OK in 235ms (Views: 230.4ms | ActiveRecord: 2.5ms)
+
+
+Started POST "/articles/1/comments" for 103.255.4.50 at 2019-01-15 09:35:01 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"3SYVKrB90RBFkw+kfUaSASOVjZbe2ULob8+Uj6v76mPIbCIYR4tkmEnN/0jN/SF/7uftY6vNFERRShrjdQ1bVA==", "comment"=>{"name"=>"Sohail Aslam", "email"=>"17100283@lums.edu.pk", "body"=>"thisthis uta comment. "}, "article_id"=>"1"}
+  [1m[36mArticle Load (0.3ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "comments" ("name", "email", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Sohail Aslam"], ["email", "17100283@lums.edu.pk"], ["body", "thisthis uta comment. "], ["article_id", 1], ["created_at", "2019-01-15 09:35:01.872554"], ["updated_at", "2019-01-15 09:35:01.872554"]]
+  [1m[35m (18.0ms)[0m  commit transaction
+Redirected to https://test-sohail961.c9users.io/articles/1
+Completed 302 Found in 25ms (ActiveRecord: 18.8ms)
+
+
+Started GET "/articles/1" for 103.255.4.50 at 2019-01-15 09:35:05 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mArticle Load (0.3ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1[0m  [["user_id", 1]]
+  [1m[35mCategory Load (0.1ms)[0m  SELECT "categories".* FROM "categories" INNER JOIN "articles_categories" ON "categories"."id" = "articles_categories"."category_id" WHERE "articles_categories"."article_id" = ?  ORDER BY categories.name  [["article_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  Rendered articles/_article.html.erb (10.4ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 1]]
+  [1m[36mComment Load (0.4ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  Rendered comments/_comment.html.erb (2.6ms)
+  Rendered comments/new.html.erb (3.9ms)
+  Rendered articles/show.html.erb within layouts/application (84.0ms)
+Completed 200 OK in 261ms (Views: 257.4ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/profiles/1" for 103.255.4.50 at 2019-01-15 09:35:38 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1[0m  [["user_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", "1"]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1[0m  [["user_id", 1]]
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1[0m  [["user_id", 1]]
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "articles" WHERE "articles"."user_id" = ?  [["user_id", 1]]
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT "articles".* FROM "articles" WHERE "articles"."user_id" = ?  ORDER BY published_at DESC, title ASC[0m  [["user_id", 1]]
+  Rendered profiles/_profile.html.erb (6.4ms)
+  Rendered profiles/show.html.erb within layouts/application (8.5ms)
+Completed 200 OK in 305ms (Views: 299.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/users" for 103.255.4.50 at 2019-01-15 09:35:58 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "profiles" ("name", "bio", "twitter", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "Name"], ["bio", "Bio"], ["twitter", "TwitterHandle"], ["created_at", "2019-01-15 09:35:58.992232"], ["updated_at", "2019-01-15 09:35:58.992232"]]
+  [1m[36m (16.7ms)[0m  [1mcommit transaction[0m
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users" LIMIT 10 OFFSET 0
+  Rendered users/_user.html.erb (1.3ms)
+  Rendered users/index.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 216ms (Views: 192.4ms | ActiveRecord: 17.7ms)
+
+
+Started GET "/articles" for 103.255.4.50 at 2019-01-15 09:36:18 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#index as HTML
+  [1m[36mArticle Load (0.4ms)[0m  [1mSELECT  "articles".* FROM "articles"  ORDER BY created_at DESC LIMIT 6 OFFSET 0[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1[0m  [["user_id", 1]]
+  [1m[35mCategory Load (0.1ms)[0m  SELECT "categories".* FROM "categories" INNER JOIN "articles_categories" ON "categories"."id" = "articles_categories"."category_id" WHERE "articles_categories"."article_id" = ?  ORDER BY categories.name  [["article_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  Rendered articles/_article.html.erb (9.9ms)
+  Rendered articles/index.html.erb within layouts/application (12.9ms)
+Completed 200 OK in 208ms (Views: 205.4ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/articles/new" for 103.255.4.50 at 2019-01-15 09:37:35 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCategory Load (0.4ms)[0m  [1mSELECT "categories".* FROM "categories"  ORDER BY categories.name[0m
+  Rendered articles/_form.html.erb (10.0ms)
+  Rendered articles/new.html.erb within layouts/application (11.3ms)
+Completed 200 OK in 224ms (Views: 220.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/profiles/1" for 103.255.4.50 at 2019-01-15 09:37:44 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ProfilesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1[0m  [["user_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", "1"]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1[0m  [["user_id", 1]]
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1[0m  [["user_id", 1]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "articles" WHERE "articles"."user_id" = ?  [["user_id", 1]]
+  [1m[36mArticle Load (0.1ms)[0m  [1mSELECT "articles".* FROM "articles" WHERE "articles"."user_id" = ?  ORDER BY published_at DESC, title ASC[0m  [["user_id", 1]]
+  Rendered profiles/_profile.html.erb (4.6ms)
+  Rendered profiles/show.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 170ms (Views: 165.7ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/articles?utf8=%E2%9C%93&search=gems" for 103.255.4.50 at 2019-01-15 09:38:02 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#index as HTML
+  Parameters: {"utf8"=>"✓", "search"=>"gems"}
+  [1m[35mArticle Load (0.4ms)[0m  SELECT  "articles".* FROM "articles" WHERE (title like '%gems%')  ORDER BY created_at DESC LIMIT 6 OFFSET 0
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 1]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mProfile Load (0.1ms)[0m  SELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1  [["user_id", 1]]
+  [1m[36mCategory Load (0.1ms)[0m  [1mSELECT "categories".* FROM "categories" INNER JOIN "articles_categories" ON "categories"."id" = "articles_categories"."category_id" WHERE "articles_categories"."article_id" = ?  ORDER BY categories.name[0m  [["article_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered articles/_article.html.erb (8.8ms)
+  Rendered articles/index.html.erb within layouts/application (11.4ms)
+Completed 200 OK in 296ms (Views: 293.0ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/" for 103.255.4.50 at 2019-01-15 09:43:00 +0000
+Cannot render console from 103.255.4.50! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by SessionsController#index as HTML
+  Rendered sessions/index.html.erb within layouts/application (0.9ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 196ms (Views: 195.0ms | ActiveRecord: 0.2ms)

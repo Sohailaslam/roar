@@ -1,0 +1,21 @@
+<%= div_for comment do %>
+    <img style = "width: 40px; margin: 5px;" src="http://www.puntodioro.com/img/testimonials/person-icon.png">
+        <p id = "comment_created"><%= comment.created_at %></p>
+
+		<h4 id = "commentSender">
+    <% @users.each do |user| %>
+      <% if comment.email == user.email %>
+          <%= link_to comment.name, profile_path(user.profile) %></h4>
+      <% end %>
+    <% end %>
+
+		<% if @article.owned_by? current_user %>
+			<span class='actions'>
+        <button class="btn btn-default btn-sm" role = "button">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          <%= link_to "Delete", [@article, comment], confirm: "Are you sure?", method: :delete %>
+        </button>
+      </span>
+    <% end %>
+    <p id ="comment_content"><%= comment.body %></p>
+<% end %>

@@ -1,0 +1,12 @@
+<% provide(:categories, "active") %>
+<% provide(:title, "Threads by Category | ROaR") %>
+
+<h3 class = "centre_text"> Threads by Category</h3>
+<div id = "searchCategories">
+<% Category.all.each do |category| %>
+   <h4><%= category.name %></h4>
+   <% category.articles.each do |article| %>
+    <p><%= link_to article.title, article%></p>
+   <% end %>
+<% end %>
+</div>
