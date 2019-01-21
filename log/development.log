@@ -1817,3 +1817,85 @@ ActiveRecord::RecordNotFound (Couldn't find User with 'id'=2):
   Rendered /usr/local/rvm/gems/ruby-2.3.4/gems/actionpack-4.2.5/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.2ms)
   Rendered /usr/local/rvm/gems/ruby-2.3.4/gems/actionpack-4.2.5/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
   Rendered /usr/local/rvm/gems/ruby-2.3.4/gems/actionpack-4.2.5/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (33.4ms)
+
+
+Started GET "/articles/2" for 182.180.111.239 at 2019-01-21 10:59:19 +0000
+Cannot render console from 182.180.111.239! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mArticle Load (0.3ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 2]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mProfile Load (0.3ms)[0m  SELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1  [["user_id", 1]]
+  [1m[36mCategory Load (0.3ms)[0m  [1mSELECT "categories".* FROM "categories" INNER JOIN "articles_categories" ON "categories"."id" = "articles_categories"."category_id" WHERE "articles_categories"."article_id" = ?  ORDER BY categories.name[0m  [["article_id", 2]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered articles/_article.html.erb (56.5ms)
+  Rendered collection (0.0ms)
+  Rendered comments/new.html.erb (8.8ms)
+  Rendered articles/show.html.erb within layouts/application (68.3ms)
+Completed 200 OK in 298ms (Views: 269.9ms | ActiveRecord: 4.6ms)
+
+
+Started POST "/articles/2/comments" for 182.180.111.239 at 2019-01-21 10:59:25 +0000
+Cannot render console from 182.180.111.239! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by CommentsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"bb2dRd2Ol70iUqDPLoj5JhM8BK+mSswweKtbgKzEuEMTzSSw7PtuF1+v/ORYFXSJZCg6lvveZ/Gnod8ymD+kHA==", "comment"=>{"name"=>"", "email"=>"", "body"=>""}, "article_id"=>"2"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "comments" ("name", "email", "body", "article_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", ""], ["email", ""], ["body", ""], ["article_id", 2], ["created_at", "2019-01-21 10:59:25.873582"], ["updated_at", "2019-01-21 10:59:25.873582"]]
+  [1m[35m (12.3ms)[0m  commit transaction
+Redirected to https://test-sohail961.c9users.io/articles/2
+Completed 302 Found in 21ms (ActiveRecord: 13.1ms)
+
+
+Started GET "/articles/2" for 182.180.111.239 at 2019-01-21 10:59:26 +0000
+Cannot render console from 182.180.111.239! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 2]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1[0m  [["user_id", 1]]
+  [1m[35mCategory Load (0.1ms)[0m  SELECT "categories".* FROM "categories" INNER JOIN "articles_categories" ON "categories"."id" = "articles_categories"."category_id" WHERE "articles_categories"."article_id" = ?  ORDER BY categories.name  [["article_id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  Rendered articles/_article.html.erb (8.8ms)
+  [1m[35mCACHE (0.0ms)[0m  SELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?  [["article_id", 2]]
+  [1m[36mComment Load (0.3ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 2]]
+  Rendered comments/_comment.html.erb (1.0ms)
+  Rendered comments/new.html.erb (2.5ms)
+  Rendered articles/show.html.erb within layouts/application (17.3ms)
+Completed 200 OK in 200ms (Views: 196.3ms | ActiveRecord: 1.3ms)
+
+
+Started DELETE "/articles/2/comments/2" for 182.180.111.239 at 2019-01-21 10:59:30 +0000
+Cannot render console from 182.180.111.239! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by CommentsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"ZQ8jWcGYJLkTyMyDSxhqLDkUB87udBuL/wPxzPAvflMbf5qs8O3dE241kKg9heeDTgA597PgsEogCXV+xNRiDA==", "article_id"=>"2", "id"=>"2"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mArticle Load (0.4ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."user_id" = ? AND "articles"."id" = ?  ORDER BY published_at DESC, title ASC LIMIT 1[0m  [["user_id", 1], ["id", 2]]
+  [1m[35mComment Load (0.3ms)[0m  SELECT  "comments".* FROM "comments" WHERE "comments"."article_id" = ? AND "comments"."id" = ? LIMIT 1  [["article_id", 2], ["id", 2]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = ?  [["id", 2]]
+  [1m[36m (10.3ms)[0m  [1mcommit transaction[0m
+Redirected to https://test-sohail961.c9users.io/articles/2
+Completed 302 Found in 22ms (ActiveRecord: 11.7ms)
+
+
+Started GET "/articles/2" for 182.180.111.239 at 2019-01-21 10:59:31 +0000
+Cannot render console from 182.180.111.239! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mArticle Load (0.3ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "comments" WHERE "comments"."article_id" = ?[0m  [["article_id", 2]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mProfile Load (0.1ms)[0m  SELECT  "profiles".* FROM "profiles" WHERE "profiles"."user_id" = ? LIMIT 1  [["user_id", 1]]
+  [1m[36mCategory Load (0.1ms)[0m  [1mSELECT "categories".* FROM "categories" INNER JOIN "articles_categories" ON "categories"."id" = "articles_categories"."category_id" WHERE "articles_categories"."article_id" = ?  ORDER BY categories.name[0m  [["article_id", 2]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered articles/_article.html.erb (8.5ms)
+  Rendered collection (0.0ms)
+  Rendered comments/new.html.erb (2.6ms)
+  Rendered articles/show.html.erb within layouts/application (13.3ms)
+Completed 200 OK in 206ms (Views: 202.6ms | ActiveRecord: 1.1ms)
